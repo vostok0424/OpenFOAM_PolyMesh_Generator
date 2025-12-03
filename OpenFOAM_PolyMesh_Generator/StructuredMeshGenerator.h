@@ -1,12 +1,8 @@
-//
-//  StructuredMeshGenerator.h
-//  OpenFOAM_PolyMesh_Generator
-//
-//  Created by SHUANG QIU on 2025/11/27.
-//
 
-#ifndef StructuredMeshGenerator_h
-#define StructuredMeshGenerator_h
+#pragma once
 
+#include "MeshTypes.h"
 
-#endif /* StructuredMeshGenerator_h */
+// 生成规则结构六面体网格（要求 X-Y 平面为正方形单元）
+MeshData generateStructuredMesh(int Nx, int Ny, int Nz,
+                                double Lx, double Ly, double Lz);

@@ -1,8 +1,8 @@
-
 #include <fstream>
 #include <filesystem>
 #include <iostream>
 #include <cstdlib>
+
 #include "PolyMeshWriter.h"
 
 void writePolyMesh(const MeshData &mesh, const std::string &baseDir)
@@ -155,57 +155,7 @@ void writePolyMesh(const MeshData &mesh, const std::string &baseDir)
         const int nPatches = 6;
         out << nPatches << "\n(\n";
 
-        // left
-        out <<
-"left\n"
-"{\n"
-"    type            patch;\n"
-"    physicalType    patch;\n"
-"    nFaces          " << mesh.nFacesLeft << ";\n"
-"    startFace       " << mesh.startFaceLeft << ";\n"
-"}\n";
-
-        // right
-        out <<
-"right\n"
-"{\n"
-"    type            patch;\n"
-"    physicalType    patch;\n"
-"    nFaces          " << mesh.nFacesRight << ";\n"
-"    startFace       " << mesh.startFaceRight << ";\n"
-"}\n";
-
-        // bottom
-        out <<
-"bottom\n"
-"{\n"
-"    type            patch;\n"
-"    physicalType    patch;\n"
-"    nFaces          " << mesh.nFacesBottom << ";\n"
-"    startFace       " << mesh.startFaceBottom << ";\n"
-"}\n";
-
-        // top
-        out <<
-"top\n"
-"{\n"
-"    type            patch;\n"
-"    physicalType    patch;\n"
-"    nFaces          " << mesh.nFacesTop << ";\n"
-"    startFace       " << mesh.startFaceTop << ";\n"
-"}\n";
-
         // front (z-min)
-        out <<
-"front\n"
-"{\n"
-"    type            patch;\n"
-"    physicalType    patch;\n"
-"    nFaces          " << mesh.nFacesFront << ";\n"
-"    startFace       " << mesh.startFaceFront << ";\n"
-"}\n";
-
-        // back (z-max)
         out <<
 "back\n"
 "{\n"
@@ -215,8 +165,59 @@ void writePolyMesh(const MeshData &mesh, const std::string &baseDir)
 "    startFace       " << mesh.startFaceBack << ";\n"
 "}\n";
 
+        // back (z-max)
+        out <<
+"front\n"
+"{\n"
+"    type            patch;\n"
+"    physicalType    patch;\n"
+"    nFaces          " << mesh.nFacesFront << ";\n"
+"    startFace       " << mesh.startFaceFront << ";\n"
+"}\n";
+
+        // top (y-max)
+        out <<
+"bottom\n"
+"{\n"
+"    type            patch;\n"
+"    physicalType    patch;\n"
+"    nFaces          " << mesh.nFacesBottom << ";\n"
+"    startFace       " << mesh.startFaceBottom << ";\n"
+"}\n";
+
+        // bottom (y-min)
+        out <<
+"top\n"
+"{\n"
+"    type            patch;\n"
+"    physicalType    patch;\n"
+"    nFaces          " << mesh.nFacesTop << ";\n"
+"    startFace       " << mesh.startFaceTop << ";\n"
+"}\n";
+
+        // reflector (use the former Right patch face range)
+        out <<
+"reflector\n"
+"{\n"
+"    type            patch;\n"
+"    physicalType    patch;\n"
+"    nFaces          " << mesh.nFacesRight << ";\n"
+"    startFace       " << mesh.startFaceRight << ";\n"
+"}\n";
+
+        // left (inlet)
+        out <<
+"left\n"
+"{\n"
+"    type            patch;\n"
+"    physicalType    patch;\n"
+"    nFaces          " << mesh.nFacesLeft << ";\n"
+"    startFace       " << mesh.startFaceLeft << ";\n"
+"}\n";
+
         out << ")\n;\n\n";
     }
 
     std::cout << "polyMesh written to " << baseDir << "\n";
 }
+
